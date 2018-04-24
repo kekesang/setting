@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yasi.mapper.STeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.yasi.pojo.STeacher" >
+    <id column="tea_no" property="teaNo" jdbcType="VARCHAR" />
+    <result column="tea_name" property="teaName" jdbcType="VARCHAR" />
+    <result column="tea_major" property="teaMajor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tea_no, tea_name, tea_major
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yasi.pojo.STeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from s_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_teacher
+    where tea_no = #{teaNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_teacher
+    where tea_no = #{teaNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yasi.pojo.STeacherExample" >
+    delete from s_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yasi.pojo.STeacher" >
+    insert into s_teacher (tea_no, tea_name, tea_major
+      )
+    values (#{teaNo,jdbcType=VARCHAR}, #{teaName,jdbcType=VARCHAR}, #{teaMajor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yasi.pojo.STeacher" >
+    insert into s_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teaNo != null" >
+        tea_no,
+      </if>
+      <if test="teaName != null" >
+        tea_name,
+      </if>
+      <if test="teaMajor != null" >
+        tea_major,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teaNo != null" >
+        #{teaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="teaName != null" >
+        #{teaName,jdbcType=VARCHAR},
+      </if>
+      <if test="teaMajor != null" >
+        #{teaMajor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yasi.pojo.STeacherExample" resultType="java.lang.Integer" >
+    select count(*) from s_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update s_teacher
+    <set >
+      <if test="record.teaNo != null" >
+        tea_no = #{record.teaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teaName != null" >
+        tea_name = #{record.teaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teaMajor != null" >
+        tea_major = #{record.teaMajor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update s_teacher
+    set tea_no = #{record.teaNo,jdbcType=VARCHAR},
+      tea_name = #{record.teaName,jdbcType=VARCHAR},
+      tea_major = #{record.teaMajor,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yasi.pojo.STeacher" >
+    update s_teacher
+    <set >
+      <if test="teaName != null" >
+        tea_name = #{teaName,jdbcType=VARCHAR},
+      </if>
+      <if test="teaMajor != null" >
+        tea_major = #{teaMajor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tea_no = #{teaNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yasi.pojo.STeacher" >
+    update s_teacher
+    set tea_name = #{teaName,jdbcType=VARCHAR},
+      tea_major = #{teaMajor,jdbcType=VARCHAR}
+    where tea_no = #{teaNo,jdbcType=VARCHAR}
+  </update>
+     <select id="findAll" resultMap="BaseResultMap" >
+   select 
+    <include refid="Base_Column_List" />
+    from s_teacher
+    where  1=1
+   </select>
+     <select id="findteacher" resultMap="BaseResultMap" parameterType="com.yasi.pojo.STeacher">
+   select 
+    <include refid="Base_Column_List" />
+    from s_teacher
+      where 1=1
+       <if test="teaNo != null" >
+       AND  tea_no=#{teaNo,jdbcType=VARCHAR}
+      </if>
+      <if test="teaName != null" >
+      AND tea_name like #{teaName,jdbcType=VARCHAR}
+      </if>
+      <if test="teaMajor != null" >
+        AND  tea_major like #{teaMajor,jdbcType=VARCHAR}
+      </if>
+     
+  </select>
+</mapper>

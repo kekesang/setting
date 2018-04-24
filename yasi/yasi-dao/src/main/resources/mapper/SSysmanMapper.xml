@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yasi.mapper.SSysmanMapper" >
+  <resultMap id="BaseResultMap" type="com.yasi.pojo.SSysman" >
+    <id column="sys_no" property="sysNo" jdbcType="VARCHAR" />
+    <result column="sys_name" property="sysName" jdbcType="VARCHAR" />
+    <result column="sys_password" property="sysPassword" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sys_no, sys_name, sys_password
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yasi.pojo.SSysmanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from s_sysman
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_sysman
+    where sys_no = #{sysNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_sysman
+    where sys_no = #{sysNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yasi.pojo.SSysmanExample" >
+    delete from s_sysman
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yasi.pojo.SSysman" >
+    insert into s_sysman (sys_no, sys_name, sys_password
+      )
+    values (#{sysNo,jdbcType=VARCHAR}, #{sysName,jdbcType=VARCHAR}, #{sysPassword,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yasi.pojo.SSysman" >
+    insert into s_sysman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysNo != null" >
+        sys_no,
+      </if>
+      <if test="sysName != null" >
+        sys_name,
+      </if>
+      <if test="sysPassword != null" >
+        sys_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysNo != null" >
+        #{sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sysName != null" >
+        #{sysName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysPassword != null" >
+        #{sysPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yasi.pojo.SSysmanExample" resultType="java.lang.Integer" >
+    select count(*) from s_sysman
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update s_sysman
+    <set >
+      <if test="record.sysNo != null" >
+        sys_no = #{record.sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysName != null" >
+        sys_name = #{record.sysName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysPassword != null" >
+        sys_password = #{record.sysPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update s_sysman
+    set sys_no = #{record.sysNo,jdbcType=VARCHAR},
+      sys_name = #{record.sysName,jdbcType=VARCHAR},
+      sys_password = #{record.sysPassword,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yasi.pojo.SSysman" >
+    update s_sysman
+    <set >
+      <if test="sysName != null" >
+        sys_name = #{sysName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysPassword != null" >
+        sys_password = #{sysPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_no = #{sysNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yasi.pojo.SSysman" >
+    update s_sysman
+    set sys_name = #{sysName,jdbcType=VARCHAR},
+      sys_password = #{sysPassword,jdbcType=VARCHAR}
+    where sys_no = #{sysNo,jdbcType=VARCHAR}
+  </update>
+ <select id="selectsysman" resultMap="BaseResultMap" parameterType="com.yasi.pojo.SClass">
+   select 
+    <include refid="Base_Column_List" />
+    from s_sysman
+   where 1=1
+       
+       <if test="sysNo != null" >
+       AND  sys_no = #{sysNo,jdbcType=VARCHAR}
+       </if>
+      <if test="sysName != null" >
+        AND  sys_name = #{sysName,jdbcType=VARCHAR}
+      </if>
+      <if test="sysPassword!= null" >
+        AND  sys_password = #{sysPassword,jdbcType=VARCHAR}
+      </if>
+     
+  </select>
+</mapper>
